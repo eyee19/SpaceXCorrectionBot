@@ -2,25 +2,24 @@ import praw
 import config
 import time
 import os
+import re
 
 def bot_login():
     r = praw.Reddit(username = config.username,
                 password = config.password,
                 client_id = config.client_id,
                 client_secret = config.client_secret,
-                user_agent = "SpX Bot 0.1")
+                user_agent = "SpX Bot 0.2")
     print("Logged in!")
     return r
 
 def run_bot(r, comments_replied_to):
 	print("Obtaining 10 comments...")
 
-	
-
 	for comment in r.subreddit('SpaceXCorrectionBot').comments(limit=10):
 		if "space x" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
 			print("String with \"space x\" found " + comment.id)
-			#comment.reply("*SpaceX")
+			comment.reply(""">space x \n\n*SpaceX \n\n---\n\n^^I'm ^^a ^^bot! [^^Source ^^code](https://github.com/eyee19/SpaceXCorrectionBot)""")
 			print("Replied to comment " + comment.id)
 
 			comments_replied_to.append(comment.id)
